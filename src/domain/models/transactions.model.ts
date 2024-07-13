@@ -4,13 +4,16 @@ import {
   Model,
   PrimaryKey,
   DataType,
+  ForeignKey,
 } from 'sequelize-typescript';
+import { ProductModel } from './products.model';
+import { CustomerModel } from './customers.model';
 
 @Table({
   tableName: 'transactions',
   timestamps: true,
 })
-export class Transaction extends Model {
+export class TransactionModel extends Model {
   @PrimaryKey
   @Column({
     type: DataType.INTEGER,
@@ -18,12 +21,14 @@ export class Transaction extends Model {
   })
   id: number;
 
+  @ForeignKey(() => CustomerModel)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
   customer_id: number;
 
+  @ForeignKey(() => ProductModel)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,

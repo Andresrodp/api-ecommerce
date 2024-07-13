@@ -4,13 +4,14 @@ import {
   Model,
   PrimaryKey,
   DataType,
+  ForeignKey,
 } from 'sequelize-typescript';
 
 @Table({
   tableName: 'customers',
   timestamps: true,
 })
-export class Customer extends Model {
+export class CustomerModel extends Model {
   @PrimaryKey
   @Column({
     type: DataType.INTEGER,

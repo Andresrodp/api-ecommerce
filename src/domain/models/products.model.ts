@@ -4,13 +4,15 @@ import {
   Model,
   PrimaryKey,
   DataType,
+  HasOne,
 } from 'sequelize-typescript';
+import { DeliveryModel } from './deliveries.model';
 
 @Table({
   tableName: 'products',
   timestamps: true,
 })
-export class Product extends Model {
+export class ProductModel extends Model {
   @PrimaryKey
   @Column({
     type: DataType.INTEGER,
@@ -47,4 +49,7 @@ export class Product extends Model {
     allowNull: false,
   })
   stock: number;
+
+  @HasOne(() => DeliveryModel)
+  delivery: DeliveryModel;
 }
