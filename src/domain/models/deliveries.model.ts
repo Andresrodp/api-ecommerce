@@ -5,13 +5,15 @@ import {
   PrimaryKey,
   DataType,
   ForeignKey,
+  BelongsTo,
 } from 'sequelize-typescript';
-
+import { CustomerModel } from './customers.model';
+import { ProductModel } from './products.model';
 @Table({
-  tableName: 'customers',
+  tableName: 'deliveries',
   timestamps: true,
 })
-export class CustomerModel extends Model {
+export class DeliveryModel extends Model {
   @PrimaryKey
   @Column({
     type: DataType.INTEGER,
@@ -19,41 +21,35 @@ export class CustomerModel extends Model {
   })
   id: number;
 
+  @ForeignKey(() => CustomerModel)
   @Column({
-    type: DataType.CHAR(100),
+    type: DataType.INTEGER,
     allowNull: false,
   })
-  name: string;
+  customer_id: number;
+
+  @ForeignKey(() => ProductModel)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+    unique: true,
+  })
+  product_id: number;
+
+  @BelongsTo(() => ProductModel)
+  customer: ProductModel;
 
   @Column({
-    type: DataType.CHAR(100),
+    type: DataType.DATE,
     allowNull: false,
   })
-  last_name: string;
-
-  @Column({
-    type: DataType.CHAR(150),
-    allowNull: false,
-  })
-  email: string;
-
-  @Column({
-    type: DataType.CHAR(50),
-    allowNull: false,
-  })
-  document: string;
-
-  @Column({
-    type: DataType.CHAR(18),
-    allowNull: false,
-  })
-  phone_number: string;
+  delivery_date: Date;
 
   @Column({
     type: DataType.CHAR(50),
     allowNull: false,
   })
-  country: string;
+  city: string;
 
   @Column({
     type: DataType.CHAR(50),
@@ -65,23 +61,17 @@ export class CustomerModel extends Model {
     type: DataType.CHAR(50),
     allowNull: false,
   })
-  city: string;
+  country: string;
 
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.CHAR(200),
     allowNull: false,
   })
-  credit_card: number;
+  address: string;
 
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.TEXT,
     allowNull: false,
   })
-  last_four_digits: number;
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: false,
-  })
-  expiration_date: Date;
+  status: string;
 }
