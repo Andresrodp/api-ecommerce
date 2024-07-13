@@ -1,12 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { CustomerModel } from './domain/models/customers.model';
 import { ProductModel } from './domain/models/products.model';
+// import { ProductRepository } from './domain/repositories/products.repository';
+import { ProductsController } from './infrastructure/controllers/products.controller';
+import { ProductsRepositoryImpl } from './infrastructure/repositories/products.repository.impl';
+import { ProductService } from './application/services/products.services';
 import { TransactionModel } from './domain/models/transactions.model';
 import { DeliveryModel } from './domain/models/deliveries.model';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,7 +36,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       DeliveryModel,
     ]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [ProductsController],
+  providers: [
+    ProductService,
+    { provide: 'ProductRepository', useClass: ProductsRepositoryImpl },
+  ],
 })
 export class AppModule {}
