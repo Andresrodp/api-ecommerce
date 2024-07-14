@@ -49,7 +49,4 @@ export class ProductModel extends Model {
     allowNull: false,
   })
   stock: number;
-
-  @HasOne(() => DeliveryModel)
-  delivery: DeliveryModel;
 }
