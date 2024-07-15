@@ -1,6 +1,8 @@
 import { Controller, Get, Put, Param, Body } from '@nestjs/common';
 import { ProductService } from '../../application/services/products.services';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('products')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productService: ProductService) {}
